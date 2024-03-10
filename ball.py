@@ -1,7 +1,7 @@
 from turtle import Turtle
 import random
 
-choice = (10, -10)
+random_ball_speeds = (11, 10, 9)
 
 
 class Ball(Turtle):
@@ -12,7 +12,7 @@ class Ball(Turtle):
         self.color("blue")
         self.setposition(0, ypos)
         self.speed("fastest")
-        self.x_move = random.choice(choice)
+        self.x_move = random.choice((10, -10))
         self.y_move = -10
         self.move_speed = speed
 
@@ -23,10 +23,16 @@ class Ball(Turtle):
 
     def bounce_y(self):
         self.y_move *= -1
-        self.move()
+        if self.y_move < 0:
+            self.y_move = random.choice(random_ball_speeds) * -1
+        else:
+            self.y_move = random.choice(random_ball_speeds)
 
     def bounce_x(self):
         self.x_move *= -1
-        self.move()
+        if self.x_move < 0:
+            self.x_move = random.choice(random_ball_speeds) * -1
+        else:
+            self.x_move = random.choice(random_ball_speeds)
 
 

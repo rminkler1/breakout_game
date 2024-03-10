@@ -13,7 +13,7 @@ BALL_STARTING_YPOS = -100
 PADDLE_STARTING_YPOS = -250
 GAME_TITLE = "Breakout!"
 BRICK_ROW_COLORS = ["yellow", "green", "orange", "red"]
-WALL_OFFSET = 20
+WALL_OFFSET = 15
 
 
 # build environment / screen
@@ -53,16 +53,15 @@ screen.onkeypress(paddle.move_left, "Left")
 
 # TODO: update scoreboard
 
-# TODO: Animate ball
 
 while True:
-    time.sleep(ball.move_speed)
-    ball.move()
+    time.sleep(ball.move_speed)     # Slow the game down
     # Detect wall collisions
     if ball.ycor() > (SCREEN_HEIGHT / 2) - WALL_OFFSET or ball.ycor() < -(SCREEN_HEIGHT / 2) + WALL_OFFSET:
         ball.bounce_y()
     elif ball.xcor() > (SCREEN_WIDTH / 2) - WALL_OFFSET or ball.xcor() < -(SCREEN_WIDTH / 2) + WALL_OFFSET:
         ball.bounce_x()
+
     ball.move()
     screen.update()
 
