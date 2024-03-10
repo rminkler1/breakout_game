@@ -11,9 +11,11 @@ SCREEN_HEIGHT = 600
 BALL_STARTING_SPEED = 0.05
 BALL_STARTING_YPOS = -100
 PADDLE_STARTING_YPOS = -250
+PADDLE_STRETCH = 10
 GAME_TITLE = "Breakout!"
 BRICK_ROW_COLORS = ["yellow", "green", "orange", "red"]
 WALL_OFFSET = 15
+
 
 
 # build environment / screen
@@ -35,7 +37,7 @@ for i, row in enumerate(rows):
         rows[i].append(brick)
 
 # place paddle on screen
-paddle = Paddle(PADDLE_STARTING_YPOS, SCREEN_WIDTH)
+paddle = Paddle(PADDLE_STARTING_YPOS, SCREEN_WIDTH, PADDLE_STRETCH)
 
 # place ball on screen
 ball = Ball(speed=BALL_STARTING_SPEED, ypos=BALL_STARTING_YPOS)
@@ -58,9 +60,17 @@ while True:
     time.sleep(ball.move_speed)     # Slow the game down
     # Detect wall collisions
     if ball.ycor() > (SCREEN_HEIGHT / 2) - WALL_OFFSET or ball.ycor() < -(SCREEN_HEIGHT / 2) + WALL_OFFSET:
-        ball.bounce_y()
+        # avoid bounce back
+        if (ball.ycor() > 0 and ball.y_move > 0) or (ball.ycor() < 0 and ball.y_move < 0):
+            ball.bounce_y()
     elif ball.xcor() > (SCREEN_WIDTH / 2) - WALL_OFFSET or ball.xcor() < -(SCREEN_WIDTH / 2) + WALL_OFFSET:
-        ball.bounce_x()
+        # avoid bounce back
+        if (ball.xcor() > 0 and ball.x_move > 0) or (ball.xcor() < 0 and ball.x_move < 0):
+            ball.bounce_x()
+
+    # Detect collision with paddle
+    if ball.distance(paddle) < (10 * PADDLE_STRETCH) and ball.ycor() < PADDLE_STARTING_YPOS + 20 and ball.y_move < 0:
+        ball.bounce_y()
 
     ball.move()
     screen.update()
