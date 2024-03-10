@@ -2,6 +2,8 @@ from turtle import Screen, Turtle
 from ball import Ball
 from paddle import Paddle
 from bricks import Bricks
+import time
+
 
 # Global Variables
 SCREEN_WIDTH = 1000
@@ -11,6 +13,7 @@ BALL_STARTING_YPOS = -100
 PADDLE_STARTING_YPOS = -250
 GAME_TITLE = "Breakout!"
 BRICK_ROW_COLORS = ["yellow", "green", "orange", "red"]
+WALL_OFFSET = 20
 
 
 # build environment / screen
@@ -35,10 +38,9 @@ for i, row in enumerate(rows):
 paddle = Paddle(PADDLE_STARTING_YPOS, SCREEN_WIDTH)
 
 # place ball on screen
-ball = Ball(BALL_STARTING_SPEED, BALL_STARTING_YPOS)
+ball = Ball(speed=BALL_STARTING_SPEED, ypos=BALL_STARTING_YPOS)
 
 
-# TODO: Animate ball
 
 # TODO: paddle collision
 
@@ -51,7 +53,17 @@ screen.onkeypress(paddle.move_left, "Left")
 
 # TODO: update scoreboard
 
+# TODO: Animate ball
+
 while True:
+    time.sleep(ball.move_speed)
+    ball.move()
+    # Detect wall collisions
+    if ball.ycor() > (SCREEN_HEIGHT / 2) - WALL_OFFSET or ball.ycor() < -(SCREEN_HEIGHT / 2) + WALL_OFFSET:
+        ball.bounce_y()
+    elif ball.xcor() > (SCREEN_WIDTH / 2) - WALL_OFFSET or ball.xcor() < -(SCREEN_WIDTH / 2) + WALL_OFFSET:
+        ball.bounce_x()
+    ball.move()
     screen.update()
 
 screen.mainloop()
