@@ -42,19 +42,10 @@ paddle = Paddle(PADDLE_STARTING_YPOS, SCREEN_WIDTH, PADDLE_STRETCH)
 # place ball on screen
 ball = Ball(speed=BALL_STARTING_SPEED, ypos=BALL_STARTING_YPOS)
 
-
-
-# TODO: paddle collision
-
 # Change paddle position based on key input
 screen.listen()
 screen.onkeypress(paddle.move_right, "Right")
 screen.onkeypress(paddle.move_left, "Left")
-
-# TODO: brick collision
-
-# TODO: update scoreboard
-
 
 while True:
     time.sleep(ball.move_speed)     # Slow the game down
@@ -71,6 +62,10 @@ while True:
     # Detect collision with paddle
     if ball.distance(paddle) < (10 * PADDLE_STRETCH) and ball.ycor() < PADDLE_STARTING_YPOS + 20 and ball.y_move < 0:
         ball.bounce_y()
+
+    # TODO: brick collision
+
+    # TODO: update scoreboard
 
     ball.move()
     screen.update()
