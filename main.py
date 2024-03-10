@@ -32,7 +32,7 @@ for i, row in enumerate(rows):
         rows[i].append(brick)
 
 # place paddle on screen
-paddle = Paddle(PADDLE_STARTING_YPOS)
+paddle = Paddle(PADDLE_STARTING_YPOS, SCREEN_WIDTH)
 
 # place ball on screen
 ball = Ball(BALL_STARTING_SPEED, BALL_STARTING_YPOS)
@@ -42,7 +42,6 @@ ball = Ball(BALL_STARTING_SPEED, BALL_STARTING_YPOS)
 
 # TODO: paddle collision
 
-# TODO: Paddle control
 # Change paddle position based on key input
 screen.listen()
 screen.onkeypress(paddle.move_right, "Right")
@@ -52,6 +51,7 @@ screen.onkeypress(paddle.move_left, "Left")
 
 # TODO: update scoreboard
 
+while True:
+    screen.update()
 
-screen.update()
 screen.mainloop()

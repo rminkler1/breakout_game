@@ -2,7 +2,7 @@ from turtle import Turtle
 
 
 class Paddle(Turtle):
-    def __init__(self, ypos):
+    def __init__(self, ypos, screen_width):
         super().__init__()
         self.color("white")
         self.setheading(0)
@@ -11,9 +11,12 @@ class Paddle(Turtle):
         self.penup()
         self.speed("fastest")
         self.sety(ypos)
+        self.window_width = screen_width
 
     def move_right(self):
-        self.forward(20)
+        if self.window_width / 2 > self.xcor():
+            self.forward(20)
 
     def move_left(self):
-        self.back(20)
+        if -(self.window_width / 2) < self.xcor():
+            self.back(20)
