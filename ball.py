@@ -1,5 +1,5 @@
-from turtle import Turtle
 import random
+from turtle import Turtle
 
 random_ball_speeds = (4, 5, 6)
 
@@ -36,5 +36,5 @@ class Ball(Turtle):
             self.x_move = random.choice(random_ball_speeds) * -1
         else:
             self.x_move = random.choice(random_ball_speeds)
-
-
+        new_x = self.xcor() - overshoot
+        self.setx(new_x)

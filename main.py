@@ -1,9 +1,9 @@
-from turtle import Screen, Turtle
-from ball import Ball
-from paddle import Paddle
-from bricks import Bricks
 import time
+from turtle import Screen
 
+from ball import Ball
+from bricks import Bricks
+from paddle import Paddle
 
 # Global Variables
 SCREEN_WIDTH = 1000
@@ -15,8 +15,6 @@ PADDLE_STRETCH = 10
 GAME_TITLE = "Breakout!"
 BRICK_ROW_COLORS = ["yellow", "green", "orange", "red"]
 WALL_OFFSET = 10
-
-
 
 # build environment / screen
 screen = Screen()
@@ -33,7 +31,7 @@ for i, row in enumerate(rows):
     number_of_bricks = int((SCREEN_WIDTH / 70))
     for each_brick in range(number_of_bricks):
         x_pos = (SCREEN_WIDTH / 2) - (each_brick * 70) - 50
-        brick = Bricks(BRICK_ROW_COLORS[i], xpos=x_pos, ypos=(i*30)+100)
+        brick = Bricks(BRICK_ROW_COLORS[i], xpos=x_pos, ypos=(i * 30) + 100)
         rows[i].append(brick)
 
 # place paddle on screen
@@ -48,25 +46,28 @@ screen.onkeypress(paddle.move_right, "Right")
 screen.onkeypress(paddle.move_left, "Left")
 
 while True:
-    time.sleep(ball.move_speed)     # Slow the game down
+    time.sleep(ball.move_speed)  # Slow the game down
     ball.move()
 
     # Detect roof collision
     if ball.ycor() > (SCREEN_HEIGHT / 2) - WALL_OFFSET and ball.y_move > 0:
         y_diff = int(ball.ycor() - ((SCREEN_HEIGHT / 2) - WALL_OFFSET))
-        ball.bounce_y(max(0, y_diff)*2)
+        ball.bounce_y(y_diff * 2)
 
-    # Detect left and right wall collisions
-    elif ball.xcor() > (SCREEN_WIDTH / 2) - WALL_OFFSET or ball.xcor() < -(SCREEN_WIDTH / 2) + WALL_OFFSET:
-        # avoid bounce back
-        if (ball.xcor() > 0 and ball.x_move > 0) or (ball.xcor() < 0 and ball.x_move < 0):
-            ball.bounce_x(0)
+    # Detect right wall collisions - extra 10 px needed to bounce off wall
+    if ball.xcor() > (SCREEN_WIDTH / 2) - WALL_OFFSET - 10 and ball.x_move > 0:
+        x_diff = int(ball.xcor() - ((SCREEN_WIDTH / 2) - WALL_OFFSET - 10))
+        ball.bounce_x(x_diff * 2)
 
-    # Detect collision with paddle
+    # Detect left wall collisions
+    if ball.xcor() < -(SCREEN_WIDTH / 2) + WALL_OFFSET and ball.x_move < 0:
+        x_diff = int(ball.xcor() + ((SCREEN_WIDTH / 2) - WALL_OFFSET))
+        ball.bounce_x(x_diff * 2)
+
+    # Detect collision with paddle top
     if ball.distance(paddle) < (10 * PADDLE_STRETCH) and ball.ycor() < PADDLE_STARTING_YPOS + 20 and ball.y_move < 0:
         y_diff = int(ball.ycor() - (PADDLE_STARTING_YPOS + 20))
-        print(y_diff)
-        ball.bounce_y(min(0, y_diff)*2)
+        ball.bounce_y(y_diff * 2)
 
     # TODO: brick collision
 
