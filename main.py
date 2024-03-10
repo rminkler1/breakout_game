@@ -8,13 +8,13 @@ import time
 # Global Variables
 SCREEN_WIDTH = 1000
 SCREEN_HEIGHT = 600
-BALL_STARTING_SPEED = 0.05
-BALL_STARTING_YPOS = -100
+BALL_STARTING_SPEED = 0.02
+BALL_STARTING_YPOS = -200
 PADDLE_STARTING_YPOS = -250
 PADDLE_STRETCH = 10
 GAME_TITLE = "Breakout!"
 BRICK_ROW_COLORS = ["yellow", "green", "orange", "red"]
-WALL_OFFSET = 15
+WALL_OFFSET = 10
 
 
 
@@ -37,7 +37,7 @@ for i, row in enumerate(rows):
         rows[i].append(brick)
 
 # place paddle on screen
-paddle = Paddle(PADDLE_STARTING_YPOS, SCREEN_WIDTH, PADDLE_STRETCH)
+paddle = Paddle(PADDLE_STARTING_YPOS, SCREEN_WIDTH, PADDLE_STRETCH, screen=screen)
 
 # place ball on screen
 ball = Ball(speed=BALL_STARTING_SPEED, ypos=BALL_STARTING_YPOS)
@@ -49,25 +49,29 @@ screen.onkeypress(paddle.move_left, "Left")
 
 while True:
     time.sleep(ball.move_speed)     # Slow the game down
-    # Detect wall collisions
-    if ball.ycor() > (SCREEN_HEIGHT / 2) - WALL_OFFSET or ball.ycor() < -(SCREEN_HEIGHT / 2) + WALL_OFFSET:
-        # avoid bounce back
-        if (ball.ycor() > 0 and ball.y_move > 0) or (ball.ycor() < 0 and ball.y_move < 0):
-            ball.bounce_y()
+    ball.move()
+
+    # Detect roof collision
+    if ball.ycor() > (SCREEN_HEIGHT / 2) - WALL_OFFSET and ball.y_move > 0:
+        y_diff = int(ball.ycor() - ((SCREEN_HEIGHT / 2) - WALL_OFFSET))
+        ball.bounce_y(max(0, y_diff)*2)
+
+    # Detect left and right wall collisions
     elif ball.xcor() > (SCREEN_WIDTH / 2) - WALL_OFFSET or ball.xcor() < -(SCREEN_WIDTH / 2) + WALL_OFFSET:
         # avoid bounce back
         if (ball.xcor() > 0 and ball.x_move > 0) or (ball.xcor() < 0 and ball.x_move < 0):
-            ball.bounce_x()
+            ball.bounce_x(0)
 
     # Detect collision with paddle
     if ball.distance(paddle) < (10 * PADDLE_STRETCH) and ball.ycor() < PADDLE_STARTING_YPOS + 20 and ball.y_move < 0:
-        ball.bounce_y()
+        y_diff = int(ball.ycor() - (PADDLE_STARTING_YPOS + 20))
+        print(y_diff)
+        ball.bounce_y(min(0, y_diff)*2)
 
     # TODO: brick collision
 
     # TODO: update scoreboard
 
-    ball.move()
     screen.update()
 
 screen.mainloop()
