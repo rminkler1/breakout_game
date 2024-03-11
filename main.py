@@ -4,17 +4,19 @@ from turtle import Screen
 from ball import Ball
 from bricks import Bricks
 from paddle import Paddle
+from scoreboard import Scoreboard
 
 # Global Variables
 SCREEN_WIDTH = 1000
 SCREEN_HEIGHT = 600
-BALL_STARTING_SPEED = 0.02      # default 0.02
+BALL_STARTING_SPEED = 0.02  # default 0.02
 BALL_STARTING_YPOS = -200
 PADDLE_STARTING_YPOS = -250
 PADDLE_STRETCH = 10
 GAME_TITLE = "Breakout!"
-BRICK_ROW_COLORS = ["yellow", "green", "orange", "red"]
+BRICK_ROW_COLORS = ["#F4EDCC", "#A4CE95", "#6196A6", "#5F5D9C"]
 WALL_OFFSET = 10
+STARTING_BALL_COUNT = 4
 
 # build environment / screen
 screen = Screen()
@@ -22,6 +24,9 @@ screen.setup(SCREEN_WIDTH, SCREEN_HEIGHT)
 screen.bgcolor("black")
 screen.title(GAME_TITLE)
 screen.tracer(0)
+
+# place scoreboard
+scoreboard = Scoreboard(SCREEN_HEIGHT, STARTING_BALL_COUNT)
 
 # Place bricks on screen
 # store bricks in a 2d array
@@ -45,7 +50,7 @@ screen.listen()
 screen.onkeypress(paddle.move_right, "Right")
 screen.onkeypress(paddle.move_left, "Left")
 
-while True:
+while scoreboard.balls > 0:
     time.sleep(ball.move_speed)  # Slow the game down
     ball.move()
 
@@ -76,6 +81,7 @@ while True:
     if ball.ycor() < -(SCREEN_HEIGHT / 2) - 100:
         ball.reset_pos(BALL_STARTING_YPOS)
         paddle.reset_pos()
+        scoreboard.balls -= 1
 
     # Detect brick collision and count remaining bricks to detect end of level
     remaining_bricks = 0
@@ -84,15 +90,18 @@ while True:
         for brick in row:
             # 43 compensates for the round ball hitting brick corners
             if ball.distance(brick) < 43 and brick.ycor() - 20 < ball.ycor() < brick.ycor() + 20:
-                brick.sety(SCREEN_HEIGHT)       # move the brick off screen
-                row.remove(brick)               # delete the brick from memory
+                brick.sety(SCREEN_HEIGHT)  # move the brick off screen
+                row.remove(brick)  # delete the brick from memory
+                scoreboard.score += 10
                 ball.bounce_y(0)
     if remaining_bricks == 0:
-        print("bricks cleared")
+        scoreboard.game_over("YOU WIN!")
         break
 
-    # TODO: update scoreboard
-
+    # update scoreboard
+    scoreboard.draw_scoreboard()
     screen.update()
+
+scoreboard.game_over("GAME OVER")
 
 screen.mainloop()

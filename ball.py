@@ -9,7 +9,7 @@ class Ball(Turtle):
         super().__init__()
         self.shape("circle")
         self.penup()
-        self.color("blue")
+        self.color("teal")
         self.goto(0, ypos)
         self.speed("fastest")
         self.x_move = random.choice((5, -5))
