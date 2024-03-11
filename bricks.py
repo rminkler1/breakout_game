@@ -9,3 +9,5 @@ class Bricks(Turtle):
         self.color(color)
         self.setposition(xpos, ypos)
         self.shapesize(stretch_len=3.0, stretch_wid=1.0)
+
+

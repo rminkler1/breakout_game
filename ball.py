@@ -10,7 +10,7 @@ class Ball(Turtle):
         self.shape("circle")
         self.penup()
         self.color("blue")
-        self.setposition(0, ypos)
+        self.goto(0, ypos)
         self.speed("fastest")
         self.x_move = random.choice((5, -5))
         self.y_move = -5
@@ -38,3 +38,6 @@ class Ball(Turtle):
             self.x_move = random.choice(random_ball_speeds)
         new_x = self.xcor() - overshoot
         self.setx(new_x)
+
+    def reset_pos(self, ypos):
+        self.goto(0, ypos)

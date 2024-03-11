@@ -8,7 +8,7 @@ from paddle import Paddle
 # Global Variables
 SCREEN_WIDTH = 1000
 SCREEN_HEIGHT = 600
-BALL_STARTING_SPEED = 0.02
+BALL_STARTING_SPEED = 0.02      # default 0.02
 BALL_STARTING_YPOS = -200
 PADDLE_STARTING_YPOS = -250
 PADDLE_STRETCH = 10
@@ -25,14 +25,14 @@ screen.tracer(0)
 
 # Place bricks on screen
 # store bricks in a 2d array
-rows = [[], [], [], []]
+rows_of_bricks = [[], [], [], []]
 
-for i, row in enumerate(rows):
+for i, row in enumerate(rows_of_bricks):
     number_of_bricks = int((SCREEN_WIDTH / 70))
     for each_brick in range(number_of_bricks):
         x_pos = (SCREEN_WIDTH / 2) - (each_brick * 70) - 50
         brick = Bricks(BRICK_ROW_COLORS[i], xpos=x_pos, ypos=(i * 30) + 100)
-        rows[i].append(brick)
+        rows_of_bricks[i].append(brick)
 
 # place paddle on screen
 paddle = Paddle(PADDLE_STARTING_YPOS, SCREEN_WIDTH, PADDLE_STRETCH, screen=screen)
@@ -67,9 +67,29 @@ while True:
     # Detect collision with paddle top
     if ball.distance(paddle) < (10 * PADDLE_STRETCH) and ball.ycor() < PADDLE_STARTING_YPOS + 20 and ball.y_move < 0:
         y_diff = int(ball.ycor() - (PADDLE_STARTING_YPOS + 20))
-        ball.bounce_y(y_diff * 2)
+        if y_diff > -10:
+            ball.bounce_y(y_diff * 2)
+        else:
+            ball.bounce_x(ball.x_move * 3)
 
-    # TODO: brick collision
+    # Detect ball hits bottom of screen
+    if ball.ycor() < -(SCREEN_HEIGHT / 2) - 100:
+        ball.reset_pos(BALL_STARTING_YPOS)
+        paddle.reset_pos()
+
+    # Detect brick collision and count remaining bricks to detect end of level
+    remaining_bricks = 0
+    for row in rows_of_bricks:
+        remaining_bricks += len(row)
+        for brick in row:
+            # 43 compensates for the round ball hitting brick corners
+            if ball.distance(brick) < 43 and brick.ycor() - 20 < ball.ycor() < brick.ycor() + 20:
+                brick.sety(SCREEN_HEIGHT)       # move the brick off screen
+                row.remove(brick)               # delete the brick from memory
+                ball.bounce_y(0)
+    if remaining_bricks == 0:
+        print("bricks cleared")
+        break
 
     # TODO: update scoreboard
 

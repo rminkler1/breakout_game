@@ -23,3 +23,6 @@ class Paddle(Turtle):
         if -(self.window_width / 2) < self.xcor():
             self.back(20)
             self.screen.update()
+
+    def reset_pos(self):
+        self.setx(0)
