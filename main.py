@@ -18,6 +18,8 @@ BRICK_ROW_COLORS = ["#F4EDCC", "#A4CE95", "#6196A6", "#5F5D9C"]
 WALL_OFFSET = 10
 STARTING_BALL_COUNT = 4
 
+game_over_text = "GAME OVER!"
+
 # build environment / screen
 screen = Screen()
 screen.setup(SCREEN_WIDTH, SCREEN_HEIGHT)
@@ -95,13 +97,13 @@ while scoreboard.balls > 0:
                 scoreboard.score += 10
                 ball.bounce_y(0)
     if remaining_bricks == 0:
-        scoreboard.game_over("YOU WIN!")
+        game_over_text = "YOU WIN!"
         break
 
     # update scoreboard
     scoreboard.draw_scoreboard()
     screen.update()
 
-scoreboard.game_over("GAME OVER")
+scoreboard.game_over(game_over_text)
 
 screen.mainloop()
