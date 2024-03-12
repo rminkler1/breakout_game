@@ -19,6 +19,9 @@ WALL_OFFSET = 10
 STARTING_BALL_COUNT = 4
 
 game_over_text = "GAME OVER!"
+rows_of_bricks = [[], [], [], []]
+level = 0
+paddle_width = PADDLE_STRETCH
 
 # build environment / screen
 screen = Screen()
@@ -30,16 +33,24 @@ screen.tracer(0)
 # place scoreboard
 scoreboard = Scoreboard(SCREEN_HEIGHT, STARTING_BALL_COUNT)
 
-# Place bricks on screen
-# store bricks in a 2d array
-rows_of_bricks = [[], [], [], []]
 
-for i, row in enumerate(rows_of_bricks):
-    number_of_bricks = int((SCREEN_WIDTH / 70))
-    for each_brick in range(number_of_bricks):
-        x_pos = (SCREEN_WIDTH / 2) - (each_brick * 70) - 50
-        brick = Bricks(BRICK_ROW_COLORS[i], xpos=x_pos, ypos=(i * 30) + 100)
-        rows_of_bricks[i].append(brick)
+def place_bricks():
+    """
+    Place bricks on screen
+    Store bricks in a 2d array
+    """
+    global rows_of_bricks
+    rows_of_bricks = [[], [], [], []]
+    for i, row in enumerate(rows_of_bricks):
+        number_of_bricks = int((SCREEN_WIDTH / 70))
+        for each_brick in range(number_of_bricks):
+            x_pos = (SCREEN_WIDTH / 2) - (each_brick * 70) - 50
+            brick = Bricks(BRICK_ROW_COLORS[i], xpos=x_pos, ypos=(i * 30) + 100)
+            rows_of_bricks[i].append(brick)
+
+
+# place bricks on screen
+place_bricks()
 
 # place paddle on screen
 paddle = Paddle(PADDLE_STARTING_YPOS, SCREEN_WIDTH, PADDLE_STRETCH, screen=screen)
@@ -52,6 +63,7 @@ screen.listen()
 screen.onkeypress(paddle.move_right, "Right")
 screen.onkeypress(paddle.move_left, "Left")
 
+# Gameplay begins here
 while scoreboard.balls > 0:
     time.sleep(ball.move_speed)  # Slow the game down
     ball.move()
@@ -72,7 +84,7 @@ while scoreboard.balls > 0:
         ball.bounce_x(x_diff * 2)
 
     # Detect collision with paddle top
-    if ball.distance(paddle) < (10 * PADDLE_STRETCH) and ball.ycor() < PADDLE_STARTING_YPOS + 20 and ball.y_move < 0:
+    if ball.distance(paddle) < (10 * paddle_width) and ball.ycor() < PADDLE_STARTING_YPOS + 20 and ball.y_move < 0:
         y_diff = int(ball.ycor() - (PADDLE_STARTING_YPOS + 20))
         if y_diff > -10:
             ball.bounce_y(y_diff * 2)
@@ -97,8 +109,11 @@ while scoreboard.balls > 0:
                 scoreboard.score += 10
                 ball.bounce_y(0)
     if remaining_bricks == 0:
-        game_over_text = "YOU WIN!"
-        break
+        level += 1
+        paddle_width = max(3, PADDLE_STRETCH - level)
+        ball.reset_pos(BALL_STARTING_YPOS)
+        place_bricks()
+        paddle.shapesize(stretch_len=paddle_width, stretch_wid=1.0)
 
     # update scoreboard
     scoreboard.draw_scoreboard()

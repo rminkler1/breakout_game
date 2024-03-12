@@ -13,7 +13,7 @@ class Ball(Turtle):
         self.goto(0, ypos)
         self.speed("fastest")
         self.x_move = random.choice((5, -5))
-        self.y_move = -5
+        self.y_move = 5
         self.move_speed = speed
 
     def move(self):
@@ -41,3 +41,5 @@ class Ball(Turtle):
 
     def reset_pos(self, ypos):
         self.goto(0, ypos)
+        self.y_move = 5
+
