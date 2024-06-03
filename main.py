@@ -70,8 +70,8 @@ while scoreboard.balls > 0:
 
     """
     Wall and paddle Collision logic
-    Detect when the ball has hit or passed the edge of wall/paddle y_diff or x_diff
-    Calculate how far the ball has gone beyond the edge
+    Detect when the ball has hit or passed the edge of wall/paddle
+    Calculate how far the ball has gone beyond the edge -- y_diff or x_diff
     Move the ball double that distance in the opposite direction (bounce)
         * bounce* 1x gets ball back to edge 2x gets ball bounce distance
     Reverse the ball's movement
