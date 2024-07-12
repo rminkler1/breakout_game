@@ -26,15 +26,16 @@ class Ball(Turtle):
         self.goto(new_x, new_y)
 
     def bounce_y(self, overshoot):
-        # reverse ball direction in y-axis aka bounce
-        self.y_move *= -1
-
-        if self.y_move < 0:
-            # if the ball is moving to the left, set a new random speed
+        """
+        Determine ball direction. Bounce ball in opposite direction with a bit of randomness.
+        """
+        if self.y_move > 0:
+            # if the ball is moving to the right, set a new random speed
             # then make it negative, moving the ball to the left
             self.y_move = random.choice(RANDOM_BALL_SPEEDS) * -1
         else:
-            # if the ball is moving to the right, set a new random speed
+            # if the ball is moving to the left,
+            # set a new random speed, leave it positive so the ball moves right.
             self.y_move = random.choice(RANDOM_BALL_SPEEDS)
 
         # set new y coordinate position.
