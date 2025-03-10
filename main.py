@@ -7,7 +7,7 @@ from paddle import Paddle
 from scoreboard import Scoreboard
 from constants import *
 
-
+# setup game elements
 game_over_text = "GAME OVER!"
 rows_of_bricks = [[], [], [], []]
 level = 0
