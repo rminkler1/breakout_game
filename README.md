@@ -2,7 +2,7 @@
 
 A Python version of Breakout written with Turtle graphics.
 This was my first game developed from scratch.
-A major focus of mine was perfecting the ball bounce againse the walls and paddle.
+A major focus of mine was perfecting the ball bounce against the walls and paddle.
 
 Run main.py to play.
 
