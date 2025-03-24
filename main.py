@@ -37,7 +37,7 @@ def place_bricks():
 
     for i, row_ in enumerate(rows_of_bricks):
         for each_brick in range(bricks_per_row):
-            x_pos = (HALF_SCREEN) - (each_brick * BRICK_WIDTH_PX) - 50
+            x_pos = HALF_SCREEN - (each_brick * BRICK_WIDTH_PX) - 50
             brick_ = Bricks(BRICK_ROW_COLORS[i], xpos=x_pos, ypos=(i * 30) + 100)
             rows_of_bricks[i].append(brick_)
 
@@ -71,18 +71,18 @@ while scoreboard.balls > 0:
     """
 
     # Detect roof collision
-    if ball.ycor() > (HALF_SCREEN) - WALL_OFFSET and ball.y_move > 0:
+    if ball.ycor() > HALF_SCREEN - WALL_OFFSET and ball.y_move > 0:
         y_diff = int(ball.ycor() - ((SCREEN_HEIGHT / 2) - WALL_OFFSET))
         ball.bounce_y(y_diff * 2)
 
     # Detect right wall collisions - extra 10 px needed to bounce off wall
-    if ball.xcor() > (HALF_SCREEN) - WALL_OFFSET - 10 and ball.x_move > 0:
-        x_diff = int(ball.xcor() - ((SCREEN_WIDTH / 2) - WALL_OFFSET - 10))
+    if ball.xcor() > HALF_SCREEN - WALL_OFFSET - 10 and ball.x_move > 0:
+        x_diff = int(ball.xcor() - (HALF_SCREEN - WALL_OFFSET - 10))
         ball.bounce_x(x_diff * 2)
 
     # Detect left wall collisions
-    if ball.xcor() < -(HALF_SCREEN) + WALL_OFFSET and ball.x_move < 0:
-        x_diff = int(ball.xcor() + ((SCREEN_WIDTH / 2) - WALL_OFFSET))
+    if ball.xcor() < -HALF_SCREEN + WALL_OFFSET and ball.x_move < 0:
+        x_diff = int(ball.xcor() + (HALF_SCREEN - WALL_OFFSET))
         ball.bounce_x(x_diff * 2)
 
     # Detect collision with paddle top
@@ -95,7 +95,7 @@ while scoreboard.balls > 0:
             ball.bounce_x(ball.x_move * 3)
 
     # Detect ball hits bottom of screen
-    if ball.ycor() < -(HALF_SCREEN) - 100:
+    if ball.ycor() < -HALF_SCREEN - 100:
         ball.reset_pos(BALL_STARTING_YPOS)
         paddle.reset_pos()
         scoreboard.balls -= 1
