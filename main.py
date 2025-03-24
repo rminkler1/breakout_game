@@ -31,12 +31,12 @@ def place_bricks():
     """
     global rows_of_bricks
     rows_of_bricks = [[], [], [], []]
-    for i, row in enumerate(rows_of_bricks):
+    for i, row_ in enumerate(rows_of_bricks):
         number_of_bricks = int((SCREEN_WIDTH / 70))
         for each_brick in range(number_of_bricks):
             x_pos = (SCREEN_WIDTH / 2) - (each_brick * 70) - 50
-            brick = Bricks(BRICK_ROW_COLORS[i], xpos=x_pos, ypos=(i * 30) + 100)
-            rows_of_bricks[i].append(brick)
+            brick_ = Bricks(BRICK_ROW_COLORS[i], xpos=x_pos, ypos=(i * 30) + 100)
+            rows_of_bricks[i].append(brick_)
 
 
 # place bricks on screen
@@ -104,7 +104,7 @@ while scoreboard.balls > 0:
         for brick in row:
             # 43 compensates for the round ball hitting brick corners
             if ball.distance(brick) < 43 and brick.ycor() - 20 < ball.ycor() < brick.ycor() + 20:
-                brick.sety(SCREEN_HEIGHT)  # move the brick off screen
+                brick.sety(SCREEN_HEIGHT)  # move the brick off-screen
                 row.remove(brick)  # delete the brick from memory
                 scoreboard.score += 10
                 ball.bounce_y(0)

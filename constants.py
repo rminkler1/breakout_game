@@ -15,3 +15,6 @@ FONT = ("Arial", 30, "normal")
 BIG_FONT = ("Arial", 60, "normal")
 
 ALIGNMENT = "center"
+
+BRICK_WIDTH = 3.0
+BRICK_HEIGHT = 1.0
