@@ -31,10 +31,13 @@ def place_bricks():
     """
     global rows_of_bricks
     rows_of_bricks = [[], [], [], []]
+
+    # calculate the number of bricks that can fit on screen in each row
+    bricks_per_row = int((SCREEN_WIDTH / BRICK_WIDTH_PX))
+
     for i, row_ in enumerate(rows_of_bricks):
-        number_of_bricks = int((SCREEN_WIDTH / 70))
-        for each_brick in range(number_of_bricks):
-            x_pos = (SCREEN_WIDTH / 2) - (each_brick * 70) - 50
+        for each_brick in range(bricks_per_row):
+            x_pos = (SCREEN_WIDTH / 2) - (each_brick * BRICK_WIDTH_PX) - 50
             brick_ = Bricks(BRICK_ROW_COLORS[i], xpos=x_pos, ypos=(i * 30) + 100)
             rows_of_bricks[i].append(brick_)
 
