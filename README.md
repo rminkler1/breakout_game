@@ -1,4 +1,4 @@
-# breakout_game
+# Breakout Game Clone
 
 A Python version of Breakout written with Turtle graphics.
 This was my first game developed from scratch.
