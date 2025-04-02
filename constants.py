@@ -11,6 +11,8 @@ BRICK_ROW_COLORS = ["#F4EDCC", "#A4CE95", "#6196A6", "#5F5D9C"]
 WALL_OFFSET = 10
 STARTING_BALL_COUNT = 4
 
+BG_COLOR = "black"
+
 # Scoreboard settings
 FONT = ("Arial", 30, "normal")
 BIG_FONT = ("Arial", 60, "normal")
@@ -22,3 +24,4 @@ BRICK_HEIGHT = 1.0
 BRICK_WIDTH_PX = 70
 
 GAME_OVER_TEXT = "Game Over!"
+

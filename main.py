@@ -17,7 +17,7 @@ class Game:
         # build environment / screen
         self.screen = Screen()
         self.screen.setup(SCREEN_WIDTH, SCREEN_HEIGHT)
-        self.screen.bgcolor("black")
+        self.screen.bgcolor(BG_COLOR)
         self.screen.title(GAME_TITLE)
         self.screen.tracer(0)
 
