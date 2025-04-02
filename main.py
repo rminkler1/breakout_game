@@ -13,7 +13,6 @@ class Game:
         # setup game elements
         self.rows_of_bricks = [[], [], [], []]
         self.level = 0
-        self.paddle_width = PADDLE_STRETCH
 
         # build environment / screen
         self.screen = Screen()
@@ -26,11 +25,6 @@ class Game:
         self.scoreboard = Scoreboard(SCREEN_HEIGHT, STARTING_BALL_COUNT)
 
     def run(self):
-
-
-
-
-
         # place bricks on screen
         self.place_bricks()
 
@@ -75,7 +69,7 @@ class Game:
                 ball.bounce_x(x_diff * 2)
 
             # Detect collision with paddle top
-            if ball.distance(paddle) < (10 * self.paddle_width) and ball.ycor() < PADDLE_STARTING_YPOS + 20 and ball.y_move < 0:
+            if ball.distance(paddle) < (10 * PADDLE_STRETCH) and ball.ycor() < PADDLE_STARTING_YPOS + 20 and ball.y_move < 0:
                 y_diff = int(ball.ycor() - (PADDLE_STARTING_YPOS + 20))
                 # bounce off sides or top of paddle
                 if y_diff > -10:
