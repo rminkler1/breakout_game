@@ -21,6 +21,7 @@ class Game:
         self.screen.title(GAME_TITLE)
         self.screen.tracer(0)
 
+
         # place scoreboard
         self.scoreboard = Scoreboard(SCREEN_HEIGHT, STARTING_BALL_COUNT)
 
@@ -54,18 +55,18 @@ class Game:
             """
 
             # Detect roof collision
-            if ball.ycor() > HALF_SCREEN - WALL_OFFSET and ball.y_move > 0:
+            if ball.ycor() > SCREEN_TOP and ball.y_move > 0:
                 y_diff = int(ball.ycor() - ((SCREEN_HEIGHT / 2) - WALL_OFFSET))
                 ball.bounce_y(y_diff * 2)
 
             # Detect right wall collisions - extra 10 px needed to bounce off wall
-            if ball.xcor() > HALF_SCREEN - WALL_OFFSET - 10 and ball.x_move > 0:
-                x_diff = int(ball.xcor() - (HALF_SCREEN - WALL_OFFSET - 10))
+            if ball.xcor() > SCREEN_RIGHT and ball.x_move > 0:
+                x_diff = ball.xcor() - SCREEN_RIGHT
                 ball.bounce_x(x_diff * 2)
 
             # Detect left wall collisions
-            if ball.xcor() < -HALF_SCREEN + WALL_OFFSET and ball.x_move < 0:
-                x_diff = int(ball.xcor() + (HALF_SCREEN - WALL_OFFSET))
+            if ball.xcor() < SCREEN_LEFT and ball.x_move < 0:
+                x_diff = ball.xcor() - SCREEN_LEFT
                 ball.bounce_x(x_diff * 2)
 
             # Detect collision with paddle top
@@ -78,7 +79,7 @@ class Game:
                     ball.bounce_x(ball.x_move * 3)
 
             # Detect ball hits bottom of screen
-            if ball.ycor() < -HALF_SCREEN - 100:
+            if ball.ycor() < SCREEN_BOTTOM:
                 ball.reset_pos(BALL_STARTING_YPOS)
                 paddle.reset_pos()
                 self.scoreboard.balls -= 1
