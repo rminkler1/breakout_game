@@ -71,7 +71,7 @@ class Game:
 
             # Detect collision with paddle top
             if ball.distance(paddle) < (10 * PADDLE_STRETCH) and ball.ycor() < PADDLE_STARTING_YPOS + 20 and ball.y_move < 0:
-                y_diff = int(ball.ycor() - (PADDLE_STARTING_YPOS + 20))
+                y_diff = ball.ycor() - (PADDLE_STARTING_YPOS + 20)
                 # bounce off sides or top of paddle
                 if y_diff > -10:
                     ball.bounce_y(y_diff * 2)
