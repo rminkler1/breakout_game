@@ -11,7 +11,6 @@ from constants import *
 class Game:
     def __init__(self):
         # setup game elements
-        self.game_over_text = "GAME OVER!"
         self.rows_of_bricks = [[], [], [], []]
         self.level = 0
         self.paddle_width = PADDLE_STRETCH
@@ -112,7 +111,7 @@ class Game:
             self.scoreboard.draw_scoreboard()
             self.screen.update()
 
-        self.scoreboard.game_over(self.game_over_text)
+        self.scoreboard.game_over(GAME_OVER_TEXT)
 
         self.screen.mainloop()
 
