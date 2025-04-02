@@ -3,9 +3,9 @@ from turtle import Screen
 
 from ball import Ball
 from bricks import Bricks
+from constants import *
 from paddle import Paddle
 from scoreboard import Scoreboard
-from constants import *
 
 
 class Game:
@@ -21,7 +21,6 @@ class Game:
         self.screen.title(GAME_TITLE)
         self.screen.tracer(0)
 
-
         # place scoreboard
         self.scoreboard = Scoreboard(SCREEN_HEIGHT, STARTING_BALL_COUNT)
 
@@ -33,7 +32,6 @@ class Game:
 
         # place ball on screen
         self.ball = Ball(speed=BALL_STARTING_SPEED, ypos=BALL_STARTING_YPOS)
-
 
     def run(self):
         # Change paddle position based on key input
@@ -71,7 +69,8 @@ class Game:
                 self.ball.bounce_x(x_diff * 2)
 
             # Detect collision with paddle top
-            if self.ball.distance(self.paddle) < (10 * PADDLE_STRETCH) and self.ball.ycor() < PADDLE_STARTING_YPOS + 20 and self.ball.y_move < 0:
+            if self.ball.distance(self.paddle) < (
+                    10 * PADDLE_STRETCH) and self.ball.ycor() < PADDLE_STARTING_YPOS + 20 and self.ball.y_move < 0:
                 y_diff = self.ball.ycor() - (PADDLE_STARTING_YPOS + 20)
                 # bounce off sides or top of paddle
                 if y_diff > -10:
@@ -122,12 +121,14 @@ class Game:
                     row.remove(brick)  # delete the brick from memory
                     self.scoreboard.score += 10
                     self.ball.bounce_y(0)
+
         if remaining_bricks == 0:
             self.level += 1
             paddle_width = max(3, PADDLE_STRETCH - self.level)
             self.ball.reset_pos(BALL_STARTING_YPOS)
             self.place_bricks()
             self.paddle.shapesize(stretch_len=paddle_width, stretch_wid=1.0)
+
 
 if __name__ == '__main__':
     game = Game()
