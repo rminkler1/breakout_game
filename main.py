@@ -14,6 +14,9 @@ class Game:
         self.rows_of_bricks = [[], [], [], []]
         self.level = 0
 
+        # track time to adjust sleep cycle
+        self.start_time = time.time()
+
         # build environment / screen
         self.screen = Screen()
         self.screen.setup(SCREEN_WIDTH, SCREEN_HEIGHT)
@@ -41,7 +44,16 @@ class Game:
 
         # Gameplay begins here
         while self.scoreboard.balls > 0:
-            time.sleep(self.ball.move_speed)  # Slow the game down
+
+            # sleep based on the delay time minus the time that has already passed.
+            # Reduces the impact of processing time on the gameplay
+            sleep_time = self.ball.move_speed - (time.time() - self.start_time)
+            if sleep_time > 0:
+                time.sleep(sleep_time)  # Slow the game down
+
+            # Get current time to know how much time has elapsed
+            self.start_time = time.time()
+
             self.ball.move()
 
             """
