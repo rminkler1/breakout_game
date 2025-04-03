@@ -67,7 +67,7 @@ class Game:
 
             # Detect roof collision
             if self.ball.ycor() > SCREEN_TOP and self.ball.y_move > 0:
-                y_diff = int(self.ball.ycor() - ((SCREEN_HEIGHT / 2) - WALL_OFFSET))
+                y_diff = self.ball.ycor() - SCREEN_TOP
                 self.ball.bounce_y(y_diff * 2)
 
             # Detect right wall collisions - extra 10 px needed to bounce off wall
