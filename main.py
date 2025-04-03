@@ -113,7 +113,7 @@ class Game:
         Store bricks in a 2d array
         """
         # calculate the number of bricks that can fit on screen in each row
-        bricks_per_row = int((SCREEN_WIDTH / BRICK_WIDTH_PX))
+        bricks_per_row = SCREEN_WIDTH // BRICK_WIDTH_PX
 
         for i, row_ in enumerate(self.rows_of_bricks):
             for each_brick in range(bricks_per_row):

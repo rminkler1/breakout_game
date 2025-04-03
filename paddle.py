@@ -15,12 +15,12 @@ class Paddle(Turtle):
         self.screen = screen
 
     def move_right(self):
-        if self.window_width / 2 > self.xcor():
+        if self.window_width // 2 > self.xcor():
             self.forward(20)
             self.screen.update()
 
     def move_left(self):
-        if -(self.window_width / 2) < self.xcor():
+        if -(self.window_width // 2) < self.xcor():
             self.back(20)
             self.screen.update()
 
