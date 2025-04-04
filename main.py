@@ -65,20 +65,8 @@ class Game:
             Reverse the ball's movement
             """
 
-            # Detect roof collision
-            if self.ball.ycor() > SCREEN_TOP and self.ball.y_move > 0:
-                y_diff = self.ball.ycor() - SCREEN_TOP
-                self.ball.bounce_y(y_diff * 2)
-
-            # Detect right wall collisions - extra 10 px needed to bounce off wall
-            if self.ball.xcor() > SCREEN_RIGHT and self.ball.x_move > 0:
-                x_diff = self.ball.xcor() - SCREEN_RIGHT
-                self.ball.bounce_x(x_diff * 2)
-
-            # Detect left wall collisions
-            if self.ball.xcor() < SCREEN_LEFT and self.ball.x_move < 0:
-                x_diff = self.ball.xcor() - SCREEN_LEFT
-                self.ball.bounce_x(x_diff * 2)
+            # handle wall collisions
+            self.wall_collisions()
 
             # Detect collision with paddle top
             if self.ball.distance(self.paddle) < (
@@ -98,6 +86,8 @@ class Game:
 
             # handle brick collisions
             self.brick_collision()
+
+
 
             # update scoreboard
             self.scoreboard.draw_scoreboard()
@@ -141,6 +131,22 @@ class Game:
             self.place_bricks()
             self.paddle.shapesize(stretch_len=paddle_width, stretch_wid=1.0)
 
+
+    def wall_collisions(self):
+        # Detect roof collision
+        if self.ball.ycor() > SCREEN_TOP and self.ball.y_move > 0:
+            y_diff = self.ball.ycor() - SCREEN_TOP
+            self.ball.bounce_y(y_diff * 2)
+
+        # Detect right wall collisions
+        if self.ball.xcor() > SCREEN_RIGHT and self.ball.x_move > 0:
+            x_diff = self.ball.xcor() - SCREEN_RIGHT
+            self.ball.bounce_x(x_diff * 2)
+
+        # Detect left wall collisions
+        if self.ball.xcor() < SCREEN_LEFT and self.ball.x_move < 0:
+            x_diff = self.ball.xcor() - SCREEN_LEFT
+            self.ball.bounce_x(x_diff * 2)
 
 if __name__ == '__main__':
     game = Game()
