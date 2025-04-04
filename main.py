@@ -9,6 +9,7 @@ from scoreboard import Scoreboard
 
 
 class Game:
+
     def __init__(self):
         # setup game elements
         self.rows_of_bricks = [[], [], [], []]
@@ -46,7 +47,7 @@ class Game:
         while self.scoreboard.balls > 0:
 
             # sleep based on the delay time minus the time that has already passed.
-            # Reduces the impact of processing time on the gameplay
+            # Reduces the impact of processing time on the gameplay while slowing things down to an appropriate speed.
             sleep_time = self.ball.move_speed - (time.time() - self.start_time)
             if sleep_time > 0:
                 time.sleep(sleep_time)  # Slow the game down
@@ -58,7 +59,7 @@ class Game:
 
             """
             Wall and paddle Collision logic
-            Detect when the ball has hit or passed the edge of wall/paddle
+            Detect when the ball has passed the boundary
             Calculate how far the ball has gone beyond the edge -- y_diff or x_diff
             Move the ball double that distance in the opposite direction (bounce)
                 * bounce* 1x gets ball back to edge 2x gets ball bounce distance
@@ -68,28 +69,20 @@ class Game:
             # handle wall collisions
             self.wall_collisions()
 
-            # Detect collision with paddle top
-            if self.ball.distance(self.paddle) < (
-                    10 * PADDLE_STRETCH) and self.ball.ycor() < PADDLE_STARTING_YPOS + 20 and self.ball.y_move < 0:
-                y_diff = self.ball.ycor() - (PADDLE_STARTING_YPOS + 20)
-                # bounce off sides or top of paddle
-                if y_diff > -10:
-                    self.ball.bounce_y(y_diff * 2)
-                else:
-                    self.ball.bounce_x(self.ball.x_move * 3)
-
-            # Detect ball hits bottom of screen
-            if self.ball.ycor() < SCREEN_BOTTOM:
-                self.ball.reset_pos(BALL_STARTING_YPOS)
-                self.paddle.reset_pos()
-                self.scoreboard.balls -= 1
+            # handle paddle collisions
+            self.paddle_collision()
 
             # handle brick collisions
             self.brick_collision()
 
+            # handle ball leaves bottom of screen
+            if self.ball.ycor() < SCREEN_BOTTOM:
+                # reset ball position, paddle position, and lose one ball
+                self.ball.reset_pos(BALL_STARTING_YPOS)
+                self.paddle.reset_pos()
+                self.scoreboard.balls -= 1
 
-
-            # update scoreboard
+            # update scoreboard and redraw screen
             self.scoreboard.draw_scoreboard()
             self.screen.update()
 
@@ -131,7 +124,6 @@ class Game:
             self.place_bricks()
             self.paddle.shapesize(stretch_len=paddle_width, stretch_wid=1.0)
 
-
     def wall_collisions(self):
         # Detect roof collision
         if self.ball.ycor() > SCREEN_TOP and self.ball.y_move > 0:
@@ -147,6 +139,18 @@ class Game:
         if self.ball.xcor() < SCREEN_LEFT and self.ball.x_move < 0:
             x_diff = self.ball.xcor() - SCREEN_LEFT
             self.ball.bounce_x(x_diff * 2)
+
+    def paddle_collision(self):
+        # Detect collision with paddle top
+        if self.ball.distance(self.paddle) < (
+                10 * PADDLE_STRETCH) and self.ball.ycor() < PADDLE_STARTING_YPOS + 20 and self.ball.y_move < 0:
+            y_diff = self.ball.ycor() - (PADDLE_STARTING_YPOS + 20)
+            # bounce off sides or top of paddle
+            if y_diff > -10:
+                self.ball.bounce_y(y_diff * 2)
+            else:
+                self.ball.bounce_x(self.ball.x_move * 3)
+
 
 if __name__ == '__main__':
     game = Game()
