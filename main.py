@@ -141,15 +141,20 @@ class Game:
             self.ball.bounce_x(x_diff * 2)
 
     def paddle_collision(self):
+
         # Detect collision with paddle top
-        if self.ball.distance(self.paddle) < (
-                10 * PADDLE_STRETCH) and self.ball.ycor() < PADDLE_STARTING_YPOS + 20 and self.ball.y_move < 0:
-            y_diff = self.ball.ycor() - (PADDLE_STARTING_YPOS + 20)
+        if (    self.ball.ycor() < PADDLE_TOP                           # ball is below paddle top
+                and self.ball.distance(self.paddle) < PADDLE_WIDTH      # ball is within the paddle width
+                and self.ball.y_move < 0                                # ball is moving down (negative y)
+        ):
+            y_diff = self.ball.ycor() - PADDLE_TOP                      # ball distance beyond paddle top
             # bounce off sides or top of paddle
+
+            # the ball enters from the top of the paddle, it can not exceed 10px into the paddle..
             if y_diff > -10:
-                self.ball.bounce_y(y_diff * 2)
+                self.ball.bounce_y(y_diff * 2)                          # bounce off top of paddle
             else:
-                self.ball.bounce_x(self.ball.x_move * 3)
+                self.ball.bounce_x(self.ball.x_move * 3)                # bounce off side of paddle
 
 
 if __name__ == '__main__':
