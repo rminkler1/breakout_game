@@ -12,6 +12,7 @@ WALL_OFFSET = 10
 STARTING_BALL_COUNT = 4
 
 BG_COLOR = "black"
+PADDLE_COLOR = "white"
 
 # Scoreboard settings
 FONT = ("Arial", 30, "normal")
@@ -24,6 +25,8 @@ BRICK_HEIGHT = 1.0
 BRICK_WIDTH_PX = 70
 
 GAME_OVER_TEXT = "Game Over!"
+
+PADDLE_MOVE_SPEED = 20
 
 # Calculate screen edges
 SCREEN_TOP = (SCREEN_HEIGHT // 2) - WALL_OFFSET
