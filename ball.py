@@ -48,11 +48,15 @@ class Ball(Turtle):
         self.sety(new_y)
 
     def bounce_x(self, overshoot):
-        self.x_move *= -1
-        if self.x_move < 0:
-            self.x_move = random.choice(RANDOM_BALL_SPEEDS) * -1
+        """
+        Bounce ball in x dir with some randomness
+        """
+        if self.x_move > 0:
+            self.x_move = random.choice(RANDOM_BALL_SPEEDS) * -1    # if x direction is positive, make it negative
         else:
-            self.x_move = random.choice(RANDOM_BALL_SPEEDS)
+            self.x_move = random.choice(RANDOM_BALL_SPEEDS)         # if x dir is neg, make it pos
+
+        # move the ball back so it does not overshoot the barrier it bounced off of
         new_x = self.xcor() - overshoot
         self.setx(new_x)
 
