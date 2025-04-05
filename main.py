@@ -109,20 +109,31 @@ class Game:
         remaining_bricks = 0
         for row in self.rows_of_bricks:
             remaining_bricks += len(row)
-            for brick in row:
-                # 43 compensates for the round ball hitting brick corners
-                if self.ball.distance(brick) < 43 and brick.ycor() - 20 < self.ball.ycor() < brick.ycor() + 20:
-                    brick.sety(SCREEN_HEIGHT)  # move the brick off-screen
-                    row.remove(brick)  # delete the brick from memory
-                    self.scoreboard.score += 10
-                    self.ball.bounce_y(0)
 
+            # if there are no bricks in the row, skip this row
+            if len(row) == 0:
+                continue
+
+            # get top and bottom of bricks for the row
+            brick_top = row[0].ycor() + BRICK_HEIGHT_PX
+            brick_bot = row[0].ycor() - BRICK_HEIGHT_PX
+
+            # if the ball is within the bricks in curr row, check distance to ball for collision
+            if brick_top > self.ball.ycor() > brick_bot:
+                for brick in row:
+                    if self.ball.distance(brick) < BRICK_COLLISION_WIDTH:
+                        brick.sety(SCREEN_HEIGHT)                   # move the brick off-screen
+                        row.remove(brick)                           # delete the brick from memory
+                        self.scoreboard.score += POINTS_PER_BRICK   # add points
+                        self.ball.bounce_y(0)                       # bounce the ball
+
+        # when all the bricks are gone, advance to next level
         if remaining_bricks == 0:
             self.level += 1
-            paddle_width = max(3, PADDLE_STRETCH - self.level)
-            self.ball.reset_pos(BALL_STARTING_YPOS)
-            self.place_bricks()
-            self.paddle.shapesize(stretch_len=paddle_width, stretch_wid=1.0)
+            paddle_width = max(3, PADDLE_STRETCH - self.level)                  # shrink paddle width
+            self.ball.reset_pos(BALL_STARTING_YPOS)                             # reset ball
+            self.place_bricks()                                                 # reset bricks
+            self.paddle.shapesize(stretch_len=paddle_width, stretch_wid=1.0)    # reset paddle
 
     def wall_collisions(self):
         # Detect roof collision

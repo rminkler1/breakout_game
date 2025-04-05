@@ -23,10 +23,14 @@ ALIGNMENT = "center"
 BRICK_WIDTH = 3.0
 BRICK_HEIGHT = 1.0
 BRICK_WIDTH_PX = 70
+BRICK_COLLISION_WIDTH = 43    # 43 compensates for the round ball hitting brick corners
+
+POINTS_PER_BRICK = 10
 
 GAME_OVER_TEXT = "Game Over!"
 
 PADDLE_MOVE_SPEED = 20
+BRICK_HEIGHT_PX = 20
 
 # Calculate screen edges
 SCREEN_TOP = (SCREEN_HEIGHT // 2) - WALL_OFFSET
