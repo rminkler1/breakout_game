@@ -129,11 +129,7 @@ class Game:
 
         # when all the bricks are gone, advance to next level
         if remaining_bricks == 0:
-            self.level += 1
-            paddle_width = max(3, PADDLE_STRETCH - self.level)                  # shrink paddle width
-            self.ball.reset_pos(BALL_STARTING_YPOS)                             # reset ball
-            self.place_bricks()                                                 # reset bricks
-            self.paddle.shapesize(stretch_len=paddle_width, stretch_wid=1.0)    # reset paddle
+            self.advance_level()
 
     def wall_collisions(self):
         # Detect roof collision
@@ -167,6 +163,12 @@ class Game:
             else:
                 self.ball.bounce_x(self.ball.x_move * 3)                # bounce off side of paddle
 
+    def advance_level(self):
+        self.level += 1
+        paddle_width = max(3, PADDLE_STRETCH - self.level)  # shrink paddle width
+        self.ball.reset_pos(BALL_STARTING_YPOS)  # reset ball
+        self.place_bricks()  # reset bricks
+        self.paddle.shapesize(stretch_len=paddle_width, stretch_wid=1.0)  # reset paddle
 
 if __name__ == '__main__':
     game = Game()
