@@ -10,7 +10,7 @@ class Scoreboard(Turtle):
         self.penup()
         self.color("gray")
         self.speed("fastest")
-        self.goto(0, (screen_height // 2) - 50)
+        self.goto(0, (screen_height // 2) - SCOREBOARD_POSITION)
         self.hideturtle()
         self.balls = balls
         self.score = 0
