@@ -15,6 +15,7 @@ class Paddle(Turtle):
         self.sety(ypos)
         self.window_width = screen_width
         self.screen = screen
+        self.width = 10 * PADDLE_STRETCH
 
     def move_right(self):
         if self.window_width // 2 > self.xcor():

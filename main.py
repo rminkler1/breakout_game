@@ -80,7 +80,7 @@ class Game:
                 # reset ball position, paddle position, and lose one ball
                 self.ball.reset_pos(BALL_STARTING_YPOS)
                 self.paddle.reset_pos()
-                self.scoreboard.balls -= 1
+                #self.scoreboard.balls -= 1
 
             # update scoreboard and redraw screen
             self.scoreboard.draw_scoreboard()
@@ -151,24 +151,31 @@ class Game:
 
         # Detect collision with paddle top
         if (    self.ball.ycor() < PADDLE_TOP                           # ball is below paddle top
-                and self.ball.distance(self.paddle) < PADDLE_WIDTH      # ball is within the paddle width
+                and self.ball.distance(self.paddle) < self.paddle.width # ball is within the paddle width
                 and self.ball.y_move < 0                                # ball is moving down (negative y)
         ):
             y_diff = self.ball.ycor() - PADDLE_TOP                      # ball distance beyond paddle top
             # bounce off sides or top of paddle
 
-            # the ball enters from the top of the paddle, it can not exceed 10px into the paddle..
+            # the ball enters from the top of the paddle, it can not exceed 10px into the paddle.
             if y_diff > -10:
                 self.ball.bounce_y(y_diff * 2)                          # bounce off top of paddle
+            elif self.ball.x_move > 0:
+                self.ball.bounce_x(max(self.ball.x_move * 2, 20))       # bounce off side of paddle by 20 px min
             else:
-                self.ball.bounce_x(self.ball.x_move * 3)                # bounce off side of paddle
+                self.ball.bounce_x(min(self.ball.x_move * 2, -20))      # bounce off side of paddle by 20 px min
+
 
     def advance_level(self):
         self.level += 1
-        paddle_width = max(3, PADDLE_STRETCH - self.level)  # shrink paddle width
         self.ball.reset_pos(BALL_STARTING_YPOS)  # reset ball
         self.place_bricks()  # reset bricks
+
+        paddle_width = max(3, PADDLE_STRETCH - self.level)  # shrink paddle width
         self.paddle.shapesize(stretch_len=paddle_width, stretch_wid=1.0)  # reset paddle
+
+        self.paddle.width = paddle_width * 10
+        self.paddle.reset_pos()
 
 if __name__ == '__main__':
     game = Game()
