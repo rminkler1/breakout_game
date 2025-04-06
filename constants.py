@@ -27,6 +27,8 @@ BRICK_HEIGHT = 1.0
 BRICK_WIDTH_PX = 70
 BRICK_COLLISION_WIDTH = 43    # 43 compensates for the round ball hitting brick corners
 
+BRICK_SPACE_FROM_TOP_OF_WINDOW = 100
+
 POINTS_PER_BRICK = 10
 
 GAME_OVER_TEXT = "Game Over!"

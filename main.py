@@ -97,12 +97,20 @@ class Game:
         """
         # calculate the number of bricks that can fit on screen in each row
         bricks_per_row = SCREEN_WIDTH // BRICK_WIDTH_PX
+        brick_horz_space = BRICK_WIDTH * 10
+        center_bricks_x = 50
 
-        for i, row_ in enumerate(self.rows_of_bricks):
+        # layout bricks in four rows
+        for i, row in enumerate(self.rows_of_bricks):
             for each_brick in range(bricks_per_row):
-                x_pos = HALF_SCREEN - (each_brick * BRICK_WIDTH_PX) - 50
-                brick_ = Bricks(BRICK_ROW_COLORS[i], xpos=x_pos, ypos=(i * 30) + 100)
-                self.rows_of_bricks[i].append(brick_)
+
+                # Brick position
+                x_pos = HALF_SCREEN - (each_brick * BRICK_WIDTH_PX) - center_bricks_x
+                y_pos = (i * brick_horz_space) + BRICK_SPACE_FROM_TOP_OF_WINDOW
+
+                # Place Brick
+                brick = Bricks(BRICK_ROW_COLORS[i], xpos=x_pos, ypos=y_pos)
+                row.append(brick)
 
     def brick_collision(self):
         # Detect brick collision and count remaining bricks to detect end of level
