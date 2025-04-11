@@ -80,7 +80,7 @@ class Game:
                 # reset ball position, paddle position, and lose one ball
                 self.ball.reset_pos(BALL_STARTING_YPOS)
                 self.paddle.reset_pos()
-                #self.scoreboard.balls -= 1
+                self.scoreboard.balls -= 1
 
             # update scoreboard and redraw screen
             self.scoreboard.draw_scoreboard()
