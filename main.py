@@ -37,11 +37,22 @@ class Game:
         # place ball on screen
         self.ball = Ball(speed=BALL_STARTING_SPEED, ypos=BALL_STARTING_YPOS)
 
+        # pause game
+        self.pause = True
+
     def run(self):
         # Change paddle position based on key input
         self.screen.listen()
         self.screen.onkeypress(self.paddle.move_right, "Right")
         self.screen.onkeypress(self.paddle.move_left, "Left")
+
+        # pause game Await spacebar press
+        self.screen.onkeypress(self.start_game, "space")
+
+        while self.pause:
+            # update scoreboard message and redraw screen
+            self.scoreboard.game_pause_message(GAME_START_TEXT)
+            self.screen.update()
 
         # Gameplay begins here
         while self.scoreboard.balls > 0:
@@ -86,7 +97,8 @@ class Game:
             self.scoreboard.draw_scoreboard()
             self.screen.update()
 
-        self.scoreboard.game_over(GAME_OVER_TEXT)
+        # Game over
+        self.scoreboard.game_pause_message(GAME_OVER_TEXT)
 
         self.screen.mainloop()
 
@@ -184,6 +196,12 @@ class Game:
 
         self.paddle.width = paddle_width * 10
         self.paddle.reset_pos()
+
+    def start_game(self):
+        """
+        Un-Pause the game
+        """
+        self.pause = False
 
 if __name__ == '__main__':
     game = Game()
