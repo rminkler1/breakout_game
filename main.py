@@ -219,10 +219,12 @@ class Game:
 if __name__ == '__main__':
     game = Game()
 
+# Game loop - pause at end of game for spacebar press.
     while not game.game_over:
+        game.run()
         game.__init__()
         game.pause = False
-        game.run()
 
+    # close window and end mainloop
     game.screen.bye()
     game.screen.mainloop()

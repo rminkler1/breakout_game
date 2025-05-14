@@ -1,5 +1,7 @@
 from turtle import Turtle
+
 from constants import *
+
 
 class Scoreboard(Turtle):
     def __init__(self, screen_height, balls):
@@ -15,7 +17,6 @@ class Scoreboard(Turtle):
 
         self.draw_scoreboard()
 
-
     def draw_scoreboard(self):
         """
         Draw the scoreboard at the top of the screen
@@ -25,7 +26,7 @@ class Scoreboard(Turtle):
         scoreboard_text = f"SCORE: {self.score}                     BALLS REMAINING: {max(0, self.balls - 1)}"
         self.write(arg=scoreboard_text, align=ALIGNMENT, font=FONT)
 
-    def game_pause_message(self, screen_message):
+    def game_pause_message(self, screen_message: str):
         """
         Write Message in center of screen
         """
