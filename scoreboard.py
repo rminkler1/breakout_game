@@ -9,6 +9,7 @@ class Scoreboard(Turtle):
         self.speed("fastest")
         self.cursor_home()
         self.hideturtle()
+        self.starting_balls = balls
         self.balls = balls
         self.score = 0
 
@@ -42,3 +43,8 @@ class Scoreboard(Turtle):
         Move cursor to center of screen
         """
         self.setposition(0, 0)
+
+    def reset(self):
+        self.score = 0
+        self.balls = self.starting_balls
+        self.clear()

@@ -29,3 +29,10 @@ class Paddle(Turtle):
 
     def reset_pos(self):
         self.setx(0)
+
+    def reset(self):
+        self.reset_pos()
+        self.shapesize(stretch_len=PADDLE_STRETCH, stretch_wid=1.0)
+        self.width = 10 * PADDLE_STRETCH
+
+

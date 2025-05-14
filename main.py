@@ -11,6 +11,7 @@ from scoreboard import Scoreboard
 class Game:
 
     def __init__(self):
+
         # setup game elements
         self.rows_of_bricks = [[], [], [], []]
         self.level = 0
@@ -20,6 +21,7 @@ class Game:
 
         # build environment / screen
         self.screen = Screen()
+        self.screen.clear() # clears game screen for new game
         self.screen.setup(SCREEN_WIDTH, SCREEN_HEIGHT)
         self.screen.bgcolor(BG_COLOR)
         self.screen.title(GAME_TITLE)
@@ -40,21 +42,26 @@ class Game:
         # pause game
         self.pause = True
 
+        self.game_over = False
+
+
     def run(self):
         # Change paddle position based on key input
         self.screen.listen()
         self.screen.onkeypress(self.paddle.move_right, "Right")
         self.screen.onkeypress(self.paddle.move_left, "Left")
 
+        self.screen.onkeypress(self.end_game, "Escape")
+
         # pause game Await spacebar press
-        self.screen.onkeypress(self.start_game, "space")
+        self.screen.onkeypress(self.un_pause, "space")
 
         while self.pause:
             # update scoreboard message and redraw screen
             self.scoreboard.game_pause_message(GAME_START_TEXT)
             self.screen.update()
 
-        # Gameplay begins here
+        # Initiate game play loop
         while self.scoreboard.balls > 0:
 
             # sleep based on the delay time minus the time that has already passed.
@@ -98,9 +105,11 @@ class Game:
             self.screen.update()
 
         # Game over
-        self.scoreboard.game_pause_message(GAME_OVER_TEXT)
+        self.pause = True
 
-        self.screen.mainloop()
+        while self.pause:
+            self.scoreboard.game_pause_message(GAME_OVER_TEXT)
+            self.screen.update()
 
     def place_bricks(self):
         """
@@ -197,12 +206,23 @@ class Game:
         self.paddle.width = paddle_width * 10
         self.paddle.reset_pos()
 
-    def start_game(self):
+    def un_pause(self):
         """
         Un-Pause the game
         """
         self.pause = False
 
+    def end_game(self):
+        self.screen.bye()
+
+
 if __name__ == '__main__':
     game = Game()
-    game.run()
+
+    while not game.game_over:
+        game.__init__()
+        game.pause = False
+        game.run()
+
+    game.screen.bye()
+    game.screen.mainloop()

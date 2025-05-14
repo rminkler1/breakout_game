@@ -31,7 +31,7 @@ BRICK_SPACE_FROM_TOP_OF_WINDOW = 100
 
 POINTS_PER_BRICK = 10
 
-GAME_OVER_TEXT = "Game Over!"
+GAME_OVER_TEXT = "Game Over! Spacebar for more."
 GAME_START_TEXT = "Press the Spacebar to begin"
 
 PADDLE_MOVE_SPEED = 20
