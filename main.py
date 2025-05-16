@@ -21,7 +21,7 @@ class Game:
 
         # build environment / screen
         self.screen = Screen()
-        self.screen.clear() # clears game screen for new game
+        self.screen.clear()  # clears game screen for new game
         self.screen.setup(SCREEN_WIDTH, SCREEN_HEIGHT)
         self.screen.bgcolor(BG_COLOR)
         self.screen.title(GAME_TITLE)
@@ -43,7 +43,6 @@ class Game:
         self.pause = True
 
         self.game_over = False
-
 
     def run(self):
         # Change paddle position based on key input
@@ -124,7 +123,6 @@ class Game:
         # layout bricks in four rows
         for i, row in enumerate(self.rows_of_bricks):
             for each_brick in range(bricks_per_row):
-
                 # Brick position
                 x_pos = HALF_SCREEN - (each_brick * BRICK_WIDTH_PX) - center_bricks_x
                 y_pos = (i * brick_horz_space) + BRICK_SPACE_FROM_TOP_OF_WINDOW
@@ -151,10 +149,10 @@ class Game:
             if brick_top > self.ball.ycor() > brick_bot:
                 for brick in row:
                     if self.ball.distance(brick) < BRICK_COLLISION_WIDTH:
-                        brick.sety(SCREEN_HEIGHT)                   # move the brick off-screen
-                        row.remove(brick)                           # delete the brick from memory
-                        self.scoreboard.score += POINTS_PER_BRICK   # add points
-                        self.ball.bounce_y(0)                       # bounce the ball
+                        brick.sety(SCREEN_HEIGHT)  # move the brick off-screen
+                        row.remove(brick)  # delete the brick from memory
+                        self.scoreboard.score += POINTS_PER_BRICK  # add points
+                        self.ball.bounce_y(0)  # bounce the ball
 
         # when all the bricks are gone, advance to next level
         if remaining_bricks == 0:
@@ -179,21 +177,20 @@ class Game:
     def paddle_collision(self):
 
         # Detect collision with paddle top
-        if (    self.ball.ycor() < PADDLE_TOP                           # ball is below paddle top
-                and self.ball.distance(self.paddle) < self.paddle.width # ball is within the paddle width
-                and self.ball.y_move < 0                                # ball is moving down (negative y)
+        if (self.ball.ycor() < PADDLE_TOP  # ball is below paddle top
+                and self.ball.distance(self.paddle) < self.paddle.width  # ball is within the paddle width
+                and self.ball.y_move < 0  # ball is moving down (negative y)
         ):
-            y_diff = self.ball.ycor() - PADDLE_TOP                      # ball distance beyond paddle top
+            y_diff = self.ball.ycor() - PADDLE_TOP  # ball distance beyond paddle top
             # bounce off sides or top of paddle
 
             # the ball enters from the top of the paddle, it can not exceed 10px into the paddle.
             if y_diff > -10:
-                self.ball.bounce_y(y_diff * 2)                          # bounce off top of paddle
+                self.ball.bounce_y(y_diff * 2)  # bounce off top of paddle
             elif self.ball.x_move > 0:
-                self.ball.bounce_x(max(self.ball.x_move * 2, 20))       # bounce off side of paddle by 20 px min
+                self.ball.bounce_x(max(self.ball.x_move * 2, 20))  # bounce off side of paddle by 20 px min
             else:
-                self.ball.bounce_x(min(self.ball.x_move * 2, -20))      # bounce off side of paddle by 20 px min
-
+                self.ball.bounce_x(min(self.ball.x_move * 2, -20))  # bounce off side of paddle by 20 px min
 
     def advance_level(self):
         self.level += 1
@@ -219,7 +216,7 @@ class Game:
 if __name__ == '__main__':
     game = Game()
 
-# Game loop - pause at end of game for spacebar press.
+    # Game loop - pause at end of game for spacebar press.
     while not game.game_over:
         game.run()
         game.__init__()
