@@ -28,7 +28,7 @@ class Game:
         self.screen.tracer(0)
 
         # place scoreboard
-        self.scoreboard = Scoreboard(SCREEN_HEIGHT, STARTING_BALL_COUNT)
+        self.scoreboard = Scoreboard(STARTING_BALL_COUNT)
 
         # place bricks on screen
         self.place_bricks()

@@ -4,7 +4,7 @@ from constants import *
 
 
 class Scoreboard(Turtle):
-    def __init__(self, screen_height, balls):
+    def __init__(self, balls):
         super().__init__()
         self.penup()
         self.color("gray")
