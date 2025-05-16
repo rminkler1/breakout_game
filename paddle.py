@@ -1,10 +1,10 @@
-from turtle import Turtle
+from turtle import Turtle, TurtleScreen
 
 from constants import *
 
 
 class Paddle(Turtle):
-    def __init__(self, ypos, screen_width, stretch, screen):
+    def __init__(self, ypos:int, screen_width:int, stretch:int, screen:TurtleScreen):
         super().__init__()
         self.color(PADDLE_COLOR)
         self.setheading(0)
