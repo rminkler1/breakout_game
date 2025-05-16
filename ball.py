@@ -6,7 +6,7 @@ from constants import *
 
 
 class Ball(Turtle):
-    def __init__(self, speed, ypos):
+    def __init__(self, speed:str, ypos:int):
         super().__init__()
         self.shape("circle")
         self.penup()
@@ -24,7 +24,7 @@ class Ball(Turtle):
         # move the ball to the new coordinates
         self.goto(new_x, new_y)
 
-    def bounce_y(self, overshoot):
+    def bounce_y(self, overshoot:int):
         """
         Determine ball direction. Bounce ball in opposite direction with a bit of randomness.
         """
@@ -46,7 +46,7 @@ class Ball(Turtle):
         # set new ball y position
         self.sety(new_y)
 
-    def bounce_x(self, overshoot):
+    def bounce_x(self, overshoot:int):
         """
         Bounce ball in x dir with some randomness
         """
@@ -59,7 +59,7 @@ class Ball(Turtle):
         new_x = self.xcor() - overshoot
         self.setx(new_x)
 
-    def reset_pos(self, ypos):
+    def reset_pos(self, ypos:int):
         """
         Move the ball to default starting position and speed.
         """
