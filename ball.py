@@ -1,9 +1,8 @@
 import random
 from turtle import Turtle
+from constants import *
 
-# Constants
-RANDOM_BALL_SPEEDS = (4, 5, 6)
-DEFAULT_BALL_SPEED = 5
+
 
 
 class Ball(Turtle):
