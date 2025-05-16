@@ -4,7 +4,7 @@ from constants import *
 
 class Bricks(Turtle):
 
-    def __init__(self, color, xpos, ypos):
+    def __init__(self, color:str, xpos:int, ypos:int):
         super().__init__()
         self.shape("square")
         self.penup()

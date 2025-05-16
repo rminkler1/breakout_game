@@ -6,7 +6,7 @@ from constants import *
 
 
 class Ball(Turtle):
-    def __init__(self, speed:str, ypos:int):
+    def __init__(self, speed:float, ypos:int):
         super().__init__()
         self.shape("circle")
         self.penup()

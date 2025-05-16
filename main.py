@@ -125,7 +125,7 @@ class Game:
             for each_brick in range(bricks_per_row):
                 # Brick position
                 x_pos = HALF_SCREEN - (each_brick * BRICK_WIDTH_PX) - center_bricks_x
-                y_pos = (i * brick_horz_space) + BRICK_SPACE_FROM_TOP_OF_WINDOW
+                y_pos = int(i * brick_horz_space) + BRICK_SPACE_FROM_TOP_OF_WINDOW
 
                 # Place Brick
                 brick = Bricks(BRICK_ROW_COLORS[i], xpos=x_pos, ypos=y_pos)
